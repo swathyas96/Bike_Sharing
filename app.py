@@ -22,10 +22,6 @@ weather = st.selectbox('Choose the weather',('Clear','Mist','Light Snow','Heavy 
 temperature = st.slider('Set the temperature',0.0,0.5,1.0)
 humidity = st.slider('Set the humidity',0.0,0.5,1.0)
 
-# def predict():
-#     row = np.array([season,month,hour,holiday,weekday,workingday,weather,temperature,humidity])
-#     y_pred = model.predict([row])
-
 def season_conv():
     if season == 'Winter':
         return 1
@@ -97,20 +93,8 @@ if st.button('Predict'):
         df_oh = one_hot_encoding(df_oh, col)
 
     try:
-        df_oh = df_oh.drop(['month_1.0'], axis=1)
+        if 'month_1.0' in df_oh.columns:
+            df_oh = df_oh.drop(['month_1.0'], axis=1)
     finally:
         y_pred = model.predict([df_oh.loc[len(df_oh.index) -1].values.tolist()])
-        st.success(int(np.exp(y_pred[0])))
-    
-    # row = np.array([
-    #     season_conv(),
-    #     month_conv(),
-    #     hour,
-    #     1 if holiday=='Yes' else 0,week_conv(),
-    #     1 if workingday=="Yes" else 0,
-    #     weather_conv(),
-    #     temperature,
-    #     humidity])
-
-    # y_pred = model.predict([row])
-    # st.success(y_pred)
+        st.success('Number of bikes needed: '+str(int(np.exp(y_pred[0]))))
