@@ -55,8 +55,7 @@ def season_conv():
         return 2
     if season == "Summer":
         return 3
-    else:
-        return 4
+    return 4
 
 
 def month_conv():
