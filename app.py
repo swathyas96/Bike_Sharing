@@ -6,7 +6,8 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-model = pickle.load(open("model_pickle.pkl", "rb"))
+with open("model_pickle.pkl", "rb") as f:
+    model = pickle.load(f.read())
 
 st.title("BIKE SHARING DEMAND ANALYSIS")
 
@@ -54,8 +55,7 @@ def season_conv():
         return 2
     elif season == "Summer":
         return 3
-    elif season == "Fall":
-        return 4
+    return 4
 
 
 def month_conv():
