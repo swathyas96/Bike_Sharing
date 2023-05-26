@@ -7,7 +7,7 @@ import pandas as pd
 import streamlit as st
 
 with open("model_pickle.pkl", "rb") as f:
-    model = pickle.load(f.read())
+    model = pickle.load(f)
 
 st.title("BIKE SHARING DEMAND ANALYSIS")
 
