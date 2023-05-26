@@ -5,12 +5,13 @@ import pickle
 import numpy as np
 import pandas as pd
 import streamlit as st
+from PIL import Image
 
 with open("model_pickle.pkl", "rb") as f:
     model = pickle.load(f)
 
 st.title("BIKE SHARING DEMAND ANALYSIS")
-
+st.image(Image.open('bike.webp'))
 season = st.selectbox("Choose the season", ("Winter", "Spring", "Summer", "Fall"))
 month = st.selectbox(
     "Choose Month",
