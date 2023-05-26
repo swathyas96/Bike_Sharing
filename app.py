@@ -1,7 +1,9 @@
-import datetime
+'''
+This Code is for hosting the Bike sharing interface
+'''
+import pickle
 import numpy as np
 import pandas as pd
-import pickle
 import streamlit as st
 
 model = pickle.load(open("model_pickle.pkl",'rb'))
@@ -23,6 +25,11 @@ temperature = st.slider('Set the temperature',0.0,0.5,1.0)
 humidity = st.slider('Set the humidity',0.0,0.5,1.0)
 
 def season_conv():
+    """Convert Season to numbers
+
+    Returns:
+        Season Number: returns the number corresponding to the season
+    """ 
     if season == 'Winter':
         return 1
     elif season == 'Spring':
@@ -33,25 +40,45 @@ def season_conv():
         return 4
 
 def month_conv():
-    month_dict = {"January": 0, "February": 1, "March": 2, "April": 3, 
+    """Convert Months to numbers
+
+    Returns:
+        Month Number: returns the number corresponding to the month
+    """
+    month_dict = {"January": 0, "February": 1, "March": 2, "April": 3,
                   "May": 4, "June": 5, "July": 6, "August": 7, 
                   "September": 8, "October": 9, "November": 10, "December": 11}
     return month_dict.get(month.title(), 0)
 
 def week_conv():
+    """Convert Days to numbers
+
+    Returns:
+        Day Number: returns the number corresponding to the Day
+    """
     day_dict = {"Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3,
                 "Thursday": 4, "Friday": 5, "Saturday": 6}
     return day_dict.get(weekday.title(), 0)
 
 def weather_conv():
+    """Convert Wheather situation to numbers
+
+    Returns:
+        Wheather situation Number: returns the number corresponding to the Wheather situation
+    """
     weather_dict = {"Clear":1,"Mist":2, "Light Snow":3, "Heavy Rain":4}
     return weather_dict.get(weather.title(), 1)
 
 
-def one_hot_encoding(data, column):
-    data = pd.concat([data, pd.get_dummies(data[column], prefix=column, drop_first=True)], axis=1)
-    data = data.drop([column], axis=1)
-    return data
+def one_hot_encoding(data_frame, column):
+    """Convert Wheather situation to numbers
+
+    Returns:
+        Wheather situation Number: returns the number corresponding to the Wheather situation
+    """
+    data_frame = pd.concat([data_frame, pd.get_dummies(data_frame[column], prefix=column, drop_first=True)], axis=1)
+    data_frame = data_frame.drop([column], axis=1)
+    return data_frame
 
 
 
@@ -81,11 +108,6 @@ if st.button('Predict'):
         humidity
     ]
     df_oh.loc[len(df_oh.index)] = data
-    
-    def one_hot_encoding(data, column):
-        data = pd.concat([data, pd.get_dummies(data[column], prefix=column, drop_first=True)], axis=1)
-        data = data.drop([column], axis=1)
-        return data
 
     cols = ['season','month','hour','holiday','weekday','workingday','weather']
 
