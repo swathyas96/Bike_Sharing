@@ -51,9 +51,9 @@ def season_conv():
     """
     if season == "Winter":
         return 1
-    elif season == "Spring":
+    if season == "Spring":
         return 2
-    elif season == "Summer":
+    if season == "Summer":
         return 3
     else:
         return 4
